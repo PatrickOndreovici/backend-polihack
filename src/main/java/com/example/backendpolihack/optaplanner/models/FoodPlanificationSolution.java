@@ -1,4 +1,4 @@
-package com.example.backendpolihack.optaplanner;
+package com.example.backendpolihack.optaplanner.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

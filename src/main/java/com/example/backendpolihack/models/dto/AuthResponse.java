@@ -1,4 +1,4 @@
-package com.example.backendpolihack.models;
+package com.example.backendpolihack.models.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

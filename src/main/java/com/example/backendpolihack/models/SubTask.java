@@ -6,29 +6,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "tasks")
-public class Task {
+@Table(name = "subtasks")
+public class SubTask {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String name;
     private String description;
-
-    @Enumerated(EnumType.STRING)
-    private EStatus status;
-
+    private boolean isDone;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="student_id")
-    private Student student;
-
-    @OneToMany(mappedBy = "task")
-    private List<SubTask> subTasks;
-
+    @JoinColumn(name = "task_id")
+    private Task task;
 }

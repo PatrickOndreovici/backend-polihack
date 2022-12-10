@@ -28,5 +28,11 @@ public class Student {
     private Mentor mentor;
 
     @OneToMany(mappedBy = "student")
-    private Set<Task> tasks;
+    private Set<Task> tasks = new HashSet<>();
+
+    private long userId;
+
+    public Student(long userId){
+        this.userId=userId;
+    }
 }

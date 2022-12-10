@@ -8,9 +8,10 @@ import javax.persistence.Enumerated;
 
 @Data
 public class TaskDto {
-    private long id;
+    private Long id;
     private String name;
     private String description;
     @Enumerated(EnumType.STRING)
     private EStatus status;
+    private Long studentId;
 }

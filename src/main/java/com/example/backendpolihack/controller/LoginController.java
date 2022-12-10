@@ -6,6 +6,7 @@ import com.example.backendpolihack.models.dto.LoginRequest;
 import com.example.backendpolihack.models.dto.MessageResponse;
 import com.example.backendpolihack.models.dto.UserDTO;
 import com.example.backendpolihack.repository.RoleRepository;
+import com.example.backendpolihack.repository.StudentRepository;
 import com.example.backendpolihack.repository.UserRepository;
 import com.example.backendpolihack.security.jwt.JwtUtils;
 import com.example.backendpolihack.security.services.UserDetailsImpl;
@@ -42,6 +43,9 @@ public class LoginController {
 
     @Autowired
     JwtUtils jwtUtils;
+
+    @Autowired
+    StudentRepository studentRepository;
 
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -86,7 +90,10 @@ public class LoginController {
 
 
         user.setRoles(roles);
-        userRepository.save(user);
+        user = userRepository.save(user);
+
+        Student student = new Student(user.getId());
+        studentRepository.save(student);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }

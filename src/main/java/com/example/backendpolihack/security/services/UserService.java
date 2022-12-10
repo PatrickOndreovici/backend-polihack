@@ -10,7 +10,7 @@ public class UserService implements IUserService{
     private UserRepository userRepository;
 
     @Override
-    public User getUser(long userId) {
-        return userRepository.findById(userId).orElse(null);
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
     }
 }

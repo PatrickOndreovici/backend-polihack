@@ -17,16 +17,14 @@ import java.util.Set;
 @AllArgsConstructor
 public class Student {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinTable(name = "id")
-    private User user;
 
     @ManyToMany(mappedBy = "students", cascade = { CascadeType.ALL })
     private Set<Technology> technologies = new HashSet<Technology>();
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "mentor")
+    @JoinColumn(name = "mentor_id")
     private Mentor mentor;
 
     @OneToMany(mappedBy = "student")

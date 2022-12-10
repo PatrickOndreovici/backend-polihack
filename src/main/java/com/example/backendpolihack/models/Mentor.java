@@ -16,10 +16,8 @@ import java.util.Set;
 @Table(name = "mentors")
 public class Mentor {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinTable(name = "id")
-    private User user;
 
     @OneToMany(mappedBy = "mentor")
     private Set<Student> students;

@@ -17,8 +17,7 @@ public class TaskController {
     private ITaskService taskService;
 
     public TaskDto saveTask(@AuthenticationPrincipal org.springframework.security.core.userdetails.User authUser,
-                            @RequestBody TaskDto task){
-//        return taskService.saveTask(authUser, task);
-        return null;
+                            @RequestBody TaskDto task) throws Exception {
+        return taskService.saveTask(authUser, task);
     }
 }

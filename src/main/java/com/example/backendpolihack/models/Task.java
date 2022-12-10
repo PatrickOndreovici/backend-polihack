@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,6 +30,6 @@ public class Task {
     private Student student;
 
     @OneToMany(mappedBy = "task")
-    private List<SubTask> subTasks;
+    private Set<SubTask> subTasks;
 
 }

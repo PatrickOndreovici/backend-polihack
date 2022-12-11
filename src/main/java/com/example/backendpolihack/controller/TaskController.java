@@ -3,6 +3,7 @@ package com.example.backendpolihack.controller;
 import com.example.backendpolihack.models.dto.TaskDto;
 import com.example.backendpolihack.service.ITaskService;
 import com.example.backendpolihack.service.IUserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +22,13 @@ public class TaskController {
 //        return taskService.saveTask(authUser, task);
 //    }
     @GetMapping()
+    @PreAuthorize("hasRole('STUDENT')")
     public List<TaskDto> getTasks(@AuthenticationPrincipal User authUser) throws Exception {
         return taskService.getTasks(authUser);
     }
 
     @PatchMapping()
+    @PreAuthorize("hasRole('STUDENT')")
     public TaskDto updateTask(@AuthenticationPrincipal User authUser, TaskDto taskDto){
         return taskService.updateTask(authUser, taskDto);
     }

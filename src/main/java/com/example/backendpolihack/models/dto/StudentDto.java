@@ -6,7 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -18,7 +21,7 @@ public class StudentDto {
     private String email;
     private ERole role;
     private MentorDto mentor;
-    private Set<Technology> technologies;
+    private List<TechnologyDto> technologies;
 
     public StudentDto(Student student, User user, User mentorUser){
         this.firstName = user.getFirstName();
@@ -26,6 +29,17 @@ public class StudentDto {
         this.email = user.getEmail();
         this.role = ERole.STUDENT;
         this.mentor = new MentorDto(mentorUser);
-        this.technologies = student.getTechnologies();
+        Set<Technology> technologies = student.getTechnologies();
+        List<TechnologyDto> list = new ArrayList<>();
+        for (Technology technology : technologies) {
+            TechnologyDto technologyDto = new TechnologyDto();
+            technologyDto.setName(technology.getName());
+            technologyDto.setType(technology.getType());
+            technologyDto.setImage(technology.getImage());
+            technologyDto.setId(technology.getId());
+            list.add(technologyDto);
+
+        }
+        this.technologies = list;
     }
 }

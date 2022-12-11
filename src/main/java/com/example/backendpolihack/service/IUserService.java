@@ -1,4 +1,4 @@
-package com.example.backendpolihack.security.services;
+package com.example.backendpolihack.service;
 
 import com.example.backendpolihack.models.User;
 

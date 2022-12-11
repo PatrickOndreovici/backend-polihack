@@ -1,23 +1,18 @@
-package com.example.backendpolihack.security.services;
+package com.example.backendpolihack.service;
 
-import com.example.backendpolihack.models.Mentor;
-import com.example.backendpolihack.models.Student;
-import com.example.backendpolihack.models.Task;
-import com.example.backendpolihack.models.User;
+import com.example.backendpolihack.models.*;
+import com.example.backendpolihack.models.dto.SubTaskDto;
 import com.example.backendpolihack.models.dto.TaskDto;
 import com.example.backendpolihack.repository.MentorRepository;
 import com.example.backendpolihack.repository.StudentRepository;
+import com.example.backendpolihack.repository.TaskRepository;
 import com.example.backendpolihack.repository.UserRepository;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +26,9 @@ public class TaskService implements ITaskService{
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     @Override
     public List<TaskDto> getTasks(org.springframework.security.core.userdetails.User authUser) throws Exception {
@@ -70,5 +68,22 @@ public class TaskService implements ITaskService{
         task.setName(taskDto.getName());
         task.setDescription(taskDto.getDescription());
         return null;
+    }
+
+    @Override
+    @PreAuthorize("hasRole('STUDENT')")
+    public TaskDto updateTask(org.springframework.security.core.userdetails.User authUser, TaskDto taskDto) {
+        //User user = userRepository.findByEmail(authUser.getUsername()).orElse(null);
+        Task task = taskRepository.findById(taskDto.getId()).orElse(null);
+        Map<Long, SubTaskDto> subTaskMap = new HashMap<>();
+        for (SubTaskDto subTaskDto : taskDto.getSubTasks()){
+            subTaskMap.put((long)subTaskDto.getId(), subTaskDto);
+        }
+        for (SubTask subTask : task.getSubTasks()){
+            SubTaskDto subTaskDto = subTaskMap.get(subTask.getId());
+            subTask.setDone(subTaskDto.isDone());
+        }
+        task = taskRepository.save(task);
+        return new TaskDto(task);
     }
 }

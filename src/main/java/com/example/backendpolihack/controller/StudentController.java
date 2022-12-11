@@ -1,7 +1,7 @@
 package com.example.backendpolihack.controller;
 
 import com.example.backendpolihack.models.dto.StudentDto;
-import com.example.backendpolihack.security.services.StudentService;
+import com.example.backendpolihack.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;

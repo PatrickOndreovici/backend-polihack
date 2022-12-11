@@ -1,5 +1,6 @@
 package com.example.backendpolihack.models;
 
+import com.example.backendpolihack.models.dto.TaskDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

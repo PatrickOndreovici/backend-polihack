@@ -64,6 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http.exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint());
         http.authorizeRequests().antMatchers("/auth/**").permitAll()
+                .antMatchers("/technologies/**").hasRole("STUDENT")
                 .anyRequest().authenticated();
         // Add JWT token filter
         http.addFilterBefore(

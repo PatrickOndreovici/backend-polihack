@@ -14,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +31,20 @@ public class TaskService implements ITaskService{
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Override
+    public List<TaskDto> getTasks(org.springframework.security.core.userdetails.User authUser) throws Exception {
+        User user = userRepository.findByEmail(authUser.getUsername()).orElse(null);
+        if (user == null){
+            throw new Exception();
+        }
+        List<Task> tasks  = studentRepository.findByUserId(user.getId()).getTasks().stream().collect(Collectors.toList());
+        List<TaskDto> response = new ArrayList<>();
+        for (Task task : tasks){
+            response.add(new TaskDto(task));
+        }
+        return response;
+    }
 
     @Override
     @PreAuthorize("hasRole('MENTOR')")

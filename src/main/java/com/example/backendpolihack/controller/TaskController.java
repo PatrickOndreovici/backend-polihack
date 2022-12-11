@@ -1,9 +1,8 @@
 package com.example.backendpolihack.controller;
 
-import com.example.backendpolihack.models.User;
 import com.example.backendpolihack.models.dto.TaskDto;
-import com.example.backendpolihack.security.services.ITaskService;
-import com.example.backendpolihack.security.services.IUserService;
+import com.example.backendpolihack.service.ITaskService;
+import com.example.backendpolihack.service.IUserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

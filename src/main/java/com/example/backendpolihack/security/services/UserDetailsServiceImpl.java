@@ -2,24 +2,32 @@ package com.example.backendpolihack.security.services;
 
 import com.example.backendpolihack.models.User;
 import com.example.backendpolihack.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Arrays;
+
 @Service
+@AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + email));
-
-        return UserDetailsImpl.build(user);
+        User applicationUser = userRepository.findByEmail(email).orElse(null);
+        if (applicationUser == null) {
+            throw new UsernameNotFoundException(email);
+        }
+        System.out.println("Sunt in loadUserByUsername" + applicationUser.toString());
+        return new org.springframework.security.core.userdetails.User(applicationUser.getEmail(), applicationUser.getPassword(), Arrays.asList(new SimpleGrantedAuthority(applicationUser.getRole()
+                .name())));
     }
 
 }

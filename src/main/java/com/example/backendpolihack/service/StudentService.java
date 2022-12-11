@@ -28,7 +28,10 @@ public class StudentService implements IStudentService {
     public StudentDto getPersonalDetails(org.springframework.security.core.userdetails.User authUser) {
         User user = userService.getUserByEmail(authUser.getUsername()); // Pentru a scoate rolul
         Student student = studentRepository.findByUserId(user.getId());
-        User mentorUser = userService.getUserById(student.getMentor().getUserId());
+        User mentorUser = null;
+        if(student.getMentor() != null){
+            mentorUser = userService.getUserById(student.getMentor().getUserId());
+        }
         return new StudentDto(student, user, mentorUser);
     }
 }

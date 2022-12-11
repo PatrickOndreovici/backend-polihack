@@ -28,7 +28,10 @@ public class StudentDto {
         this.lastName = user.getLastName();
         this.email = user.getEmail();
         this.role = ERole.STUDENT;
-        this.mentor = new MentorDto(mentorUser);
+        this.mentor = null;
+        if(mentorUser != null){
+            this.mentor = new MentorDto(mentorUser);
+        }
         Set<Technology> technologies = student.getTechnologies();
         List<TechnologyDto> list = new ArrayList<>();
         for (Technology technology : technologies) {
